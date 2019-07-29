@@ -62,6 +62,7 @@ conda_list <- function(conda = "auto") {
   # normalize and remove duplicates (seems necessary on Windows as Anaconda
   # may report both short-path and long-path versions of the same environment)
   conda_envs <- Filter(file.exists, conda_envs)
+  print(conda_envs)
   conda_envs <- unique(normalizePath(conda_envs))
 
   # build data frame
