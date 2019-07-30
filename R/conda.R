@@ -30,11 +30,18 @@ conda_list <- function(conda = "auto") {
   # resolve conda binary
   conda <- conda_binary(conda)
 
+  cat("Conda binary: ", conda, "\n")
+
   # list envs -- discard stderr as Anaconda may emit warnings that can
   # otherwise be ignored; see e.g. https://github.com/rstudio/reticulate/issues/474
   conda_envs <- suppressWarnings(
     system2(conda, args = c("info", "--json"), stdout = TRUE, stderr = FALSE)
   )
+
+  cat("Conda envs file: ------------\n")
+  cat(conda_envs)
+  cat("\n")
+
 
   # check for error
   status <- attr(conda_envs, "status")
