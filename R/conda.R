@@ -39,8 +39,9 @@ conda_list <- function(conda = "auto") {
     system2(conda, args = c("info", "--json"), stdout = TRUE, stderr = FALSE)
   )
 
-  print("Conda envs file: ------------")
-  print(conda_envs)
+  cat("Conda envs file: ------------\n")
+  cat(conda_envs)
+  cat("--------------\n")
 
 
   # check for error
@@ -68,7 +69,7 @@ conda_list <- function(conda = "auto") {
 
   # normalize and remove duplicates (seems necessary on Windows as Anaconda
   # may report both short-path and long-path versions of the same environment)
-  conda_envs <- Filter(file.exists, conda_envs)
+  conda_envs <- Filter(dir.exists, conda_envs)
   print(conda_envs)
   conda_envs <- unique(normalizePath(conda_envs))
 
