@@ -79,6 +79,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// r_to_py_data_ptr_impl
+PyObjectRef r_to_py_data_ptr_impl(Rcpp::XPtr<double *> x, bool convert);
+RcppExport SEXP _reticulate_r_to_py_data_ptr_impl(SEXP xSEXP, SEXP convertSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::XPtr<double *> >::type x(xSEXP);
+    Rcpp::traits::input_parameter< bool >::type convert(convertSEXP);
+    rcpp_result_gen = Rcpp::wrap(r_to_py_data_ptr_impl(x, convert));
+    return rcpp_result_gen;
+END_RCPP
+}
 // r_to_py_impl
 PyObjectRef r_to_py_impl(RObject object, bool convert);
 RcppExport SEXP _reticulate_r_to_py_impl(SEXP objectSEXP, SEXP convertSEXP) {
@@ -588,6 +600,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_reticulate_py_clear_last_error", (DL_FUNC) &_reticulate_py_clear_last_error, 0},
     {"_reticulate_py_is_callable", (DL_FUNC) &_reticulate_py_is_callable, 1},
     {"_reticulate_py_get_formals", (DL_FUNC) &_reticulate_py_get_formals, 1},
+    {"_reticulate_r_to_py_data_ptr_impl", (DL_FUNC) &_reticulate_r_to_py_data_ptr_impl, 2},
     {"_reticulate_r_to_py_impl", (DL_FUNC) &_reticulate_r_to_py_impl, 2},
     {"_reticulate_py_activate_virtualenv", (DL_FUNC) &_reticulate_py_activate_virtualenv, 1},
     {"_reticulate_py_initialize", (DL_FUNC) &_reticulate_py_initialize, 7},

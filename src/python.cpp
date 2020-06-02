@@ -1029,6 +1029,63 @@ bool is_convertible_to_numpy(RObject x) {
     type == STRSXP;
 }
 
+PyObject* r_to_py_data_ptr (Rcpp::XPtr<double *> x) {
+  
+  Rcpp::Rcout << "hello" << std::endl;
+  Rcpp::Rcout << "hello1" << std::endl;
+  
+  auto dimensions = IntegerVector::create(1);
+      
+  int nd = dimensions.length();
+  std::vector<npy_intp> dims(nd);
+  for (int i = 0; i < nd; i++)
+    dims[i] = dimensions[i];
+  
+  Rcpp::Rcout << "hello2" << std::endl;
+
+  double * data_ = *x;
+  void* data = (void*) data_;
+  
+  double v = *(double*)data;
+  Rcpp::Rcout << v << std::endl;
+  
+  int flags = NPY_ARRAY_FARRAY_RO;
+  
+  Rcpp::Rcout << "hello3" << std::endl;
+  
+  Rcpp::Rcout << data << std::endl;
+  Rcpp::Rcout << &(dims[0]) << std::endl;
+  
+  int typenum = NPY_DOUBLE;
+  
+  PyObject* array = PyArray_New(&PyArray_Type,
+                                nd,
+                                &(dims[0]),
+                                typenum,
+                                NULL,
+                                data,
+                                0,
+                                flags,
+                                NULL);
+  
+  
+  Rcpp::Rcout << "hello4" << std::endl;
+  
+  // check for error
+  if (array == NULL)
+    stop(py_fetch_error());
+  
+  Rcpp::Rcout << "hello5" << std::endl;
+  
+  // return it
+  return array;
+}
+
+// [[Rcpp::export]]
+PyObjectRef r_to_py_data_ptr_impl(Rcpp::XPtr<double *> x, bool convert) {
+  return py_ref(r_to_py_data_ptr(x), convert);
+}
+
 PyObject* r_to_py_numpy(RObject x, bool convert) {
   
   int type = x.sexp_type();

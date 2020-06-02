@@ -38,6 +38,10 @@ py_get_formals <- function(func) {
     .Call(`_reticulate_py_get_formals`, func)
 }
 
+r_to_py_data_ptr_impl <- function(x, convert) {
+    .Call(`_reticulate_r_to_py_data_ptr_impl`, x, convert)
+}
+
 r_to_py_impl <- function(object, convert) {
     .Call(`_reticulate_r_to_py_impl`, object, convert)
 }
